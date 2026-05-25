@@ -81,7 +81,10 @@ slurm/example_scripts/
 Available templates:
 
 ```text
+# super mario bros
 slurm/example_scripts/smb.sh
+
+# super mario land
 slurm/example_scripts/sml.sh
 ```
 

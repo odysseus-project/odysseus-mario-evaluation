@@ -19,16 +19,12 @@ while ! nc -z localhost 8000; do
 done
 
 interaction_model=
-progress=
-steps=
-max_history=
-text_info=
-with_game_area=
-epsilon_noise=
-
-# Middle checkpoint states to start from (one or more per world-level).
-CKPT_DIR=""
-MIDDLE_STATE_GLOB=""
+progress=0
+steps=1000
+max_history=0
+text_info=0
+with_game_area=0
+epsilon_noise=0.0
 
 # Parallel execution settings
 MAX_PARALLEL_JOBS=
@@ -67,39 +63,19 @@ while [ $# -ge 2 ]; do
     world=$1
     level=$2
     shift 2
-    state_dir="${CKPT_DIR}/world${world}-level${level}"
-    shopt -s nullglob
-    state_files=( "${state_dir}"/${MIDDLE_STATE_GLOB} )
-    shopt -u nullglob
-
-    if [ ${#state_files[@]} -eq 0 ]; then
-        echo "[WARN] No middle state files found in ${state_dir}; skipping world ${world} level ${level}"
-        continue
-    fi
-
-    # Sort by numeric progress (via version sort on filenames).
-    IFS=$'\n' state_files_sorted=($(printf '%s\n' "${state_files[@]}" | sort -V))
-    unset IFS
-
-    for state_file in "${state_files_sorted[@]}"; do
-        base="$(basename "$state_file")"             # start_XXXX.state
-        progress_token="${base#start_}"            # XXXX.state
-        progress_token="${progress_token%.state}" # XXXX
-
-        echo "[INFO] Starting world ${world} level ${level} from ${base} (64 runs)"
-        eval_pids=()
-        for run_count in {1..64}; do
-            while [ $(jobs -r | wc -l) -ge $MAX_PARALLEL_JOBS ]; do
-                sleep 1
-            done
-            run_evaluation $run_count $world $level "$state_file" "$progress_token" &
-            eval_pids+=($!)
+    echo "[INFO] Starting world ${world} level ${level} (64 runs)"
+    eval_pids=()
+    for run_count in {1..64}; do
+        while [ $(jobs -r | wc -l) -ge $MAX_PARALLEL_JOBS ]; do
+            sleep 1
         done
-        for pid in "${eval_pids[@]}"; do
-            wait "$pid"
-        done
-        echo "[INFO] All 64 runs completed for World ${world}, Level ${level}, progress ${progress_token}!"
+        run_evaluation $run_count $world $level &
+        eval_pids+=($!)
     done
+    for pid in "${eval_pids[@]}"; do
+        wait "$pid"
+    done
+    echo "[INFO] All 64 runs completed for World ${world}, Level ${level}!"
 done
 
 echo "All 10 world levels completed!"

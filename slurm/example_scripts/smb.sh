@@ -18,7 +18,7 @@ while ! nc -z localhost 8000; do
   sleep 1
 done
 
-interaction_model=qwen3-8b-base
+interaction_model=
 progress=0
 steps=1000
 max_history=0
@@ -26,7 +26,8 @@ text_info=0
 with_game_area=0
 epsilon_noise=0.0
 
-MAX_PARALLEL_JOBS=32
+# Parallel execution settings
+MAX_PARALLEL_JOBS=
 
 run_evaluation() {
     local run_count=$1
