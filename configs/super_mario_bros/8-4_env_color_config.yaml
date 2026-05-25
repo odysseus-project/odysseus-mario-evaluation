@@ -1,0 +1,8 @@
+class_name: "game_envs.super_mario_bros.SuperMarioBrosEnv"
+config:
+  world: 8
+  stage: 4
+  frame_skip: 5
+  frame_stack: 1
+  with_text_info: false
+  render_mode: null

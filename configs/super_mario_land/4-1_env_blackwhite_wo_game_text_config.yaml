@@ -1,0 +1,12 @@
+class_name: "game_envs.super_mario_land.PyBoySuperMarioLandEnv"
+config:
+  rom_path: "../rom/super_mario_land.gb"
+  init_state: null
+  world: 4
+  level: 1
+  headless: true
+  sound: false
+  with_text_info: false
+  with_game_area: false
+  cgb: false
+

@@ -1,0 +1,9 @@
+model_name: 
+model_type: vlm
+base_url: 
+api_key: EMPTY
+temperature: 1.0
+top_p: 1.0
+top_k: -1
+max_tokens: 2048
+timeout: 60

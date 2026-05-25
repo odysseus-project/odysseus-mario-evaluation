@@ -1,0 +1,66 @@
+# --- Evaluation outputs (large: JSON, PNG, run folders) ---
+logs_evaluation/
+logs_evaluation_debug/
+logs_evaluation_new/
+logs_evaluation_smb_8-1/
+
+# --- Slurm job logs (keep scripts under slurm/) ---
+slurm/outputs/
+slurm/logs/
+slurm/super_mario_land/
+slurm/super_mario_bros/
+slurm/test/
+
+
+# --- model configs with exact path
+model_configs_with_path/
+
+# --- Game checkpoints / prepared start states (regenerable) ---
+states/
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.eggs/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.hypothesis/
+
+# --- ML / experiment tracking ---
+wandb/
+mlruns/
+tensorboard/
+**/checkpoints/
+*.pt
+*.ckpt
+*.safetensors
+
+# --- Environment & IDE ---
+.env
+.venv/
+venv/
+env/
+.idea/
+.vscode/
+*.swp
+*~
+.DS_Store
+
+# --- Misc logs & archives ---
+*.log
+*.tar.gz
+*.zip
+
+# --- Game media (if added locally) ---
+*.gb
+*.gbc
+*.nes
